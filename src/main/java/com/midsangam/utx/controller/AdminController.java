@@ -1,17 +1,13 @@
 package com.midsangam.utx.controller;
 
-import com.midsangam.utx.Dto.AdminDto;
-import com.midsangam.utx.Dto.CustomerDto;
-import com.midsangam.utx.model.Admin;
-import com.midsangam.utx.model.Customer;
-import com.midsangam.utx.services.AdminService;
-import com.midsangam.utx.services.CustomerService;
+import com.midsangam.utx.entity.Admin;
+import com.midsangam.utx.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("admin")
+@RequestMapping("/api/admin")
 @RestController
 public class AdminController {
 
@@ -19,32 +15,31 @@ public class AdminController {
     private AdminService adminService;
 
     @PostMapping
-    public String create(@RequestBody AdminDto adminDto){
-        adminService.createAdmin(adminDto);
-        return "Customer Created!";
+    public void create(@RequestBody Admin admin){
+        adminService.create(admin);
     }
 
     @GetMapping("{adminId}")
-    public Admin readById(@PathVariable String adminId){
-        Admin admin = adminService.readAdminById(adminId);
+    public Admin read(@PathVariable int adminId){
+        Admin admin = adminService.readById(adminId);
+        if(admin == null)
+            return null;
         return admin;
     }
 
     @GetMapping("/all")
     public List<Admin> readAll(){
-        List<Admin> admins = adminService.readAllAdmin();
-        return admins;
+        List<Admin> adminList = adminService.readAll();
+        return adminList;
     }
 
     @PutMapping
-    public Admin update(@RequestBody AdminDto adminDto){
-        Admin admin = adminService.updateAdmin(adminDto);
-        return admin;
+    public void update(@RequestBody Admin admin){
+        adminService.update(admin);
     }
 
     @DeleteMapping("{adminId}")
-    public String delete(@PathVariable String adminId){
-        adminService.deleteAdminById(adminId);
-        return "Deleted!";
+    public void delete(@PathVariable int adminId){
+        adminService.deleteById(adminId);
     }
 }

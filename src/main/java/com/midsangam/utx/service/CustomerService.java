@@ -5,6 +5,7 @@ import com.midsangam.utx.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,11 @@ public class CustomerService {
             return null;
         Customer customer = customerOptional.get();
         return customer;
+    }
+
+    public List<Customer> readAll() {
+        List<Customer> customerList = customerRepository.findAll();
+        return customerList;
     }
 
     public void update(Customer customer) {

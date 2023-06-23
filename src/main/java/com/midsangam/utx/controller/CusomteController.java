@@ -5,6 +5,8 @@ import com.midsangam.utx.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/customer")
 public class CusomteController {
@@ -25,6 +27,12 @@ public class CusomteController {
         if(customer==null)
             return null;
         return customer;
+    }
+
+    @GetMapping("/all")
+    public List<Customer> readAll(){
+        List<Customer> customerList = customerService.readAll();
+        return customerList;
     }
 
     @PutMapping
